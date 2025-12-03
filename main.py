@@ -44,14 +44,19 @@ def apply_style_to_range(ws, start_row, end_row, start_col, end_col,
 
 
 def autosize_columns(ws):
-    """ 자동 열 너비 조정 """
+    """열 너비 자동 조정 """
     for col in ws.columns:
         max_len = 0
         col_letter = col[0].column_letter
+
         for cell in col:
             if cell.value:
                 max_len = max(max_len, len(str(cell.value)))
-        ws.column_dimensions[col_letter].width = max_len + 2
+
+        # 최소 폭 15, 넉넉한 여유 +3
+        adjusted_width = max(max_len + 3, 15)
+        ws.column_dimensions[col_letter].width = adjusted_width
+
 
 
 # =====================================================
